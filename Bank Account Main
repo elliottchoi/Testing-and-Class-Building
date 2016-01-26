@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class BankAccountMain {
+
+	public static void main(String[] args) {
+		// Creating Bank Accounts
+		BankAccount firstAccount = new BankAccount("Fred Flintstone", 345.67);
+		System.out.println(firstAccount);
+		BankAccount secondAccount = new BankAccount("Betty Rubble", 1456.70);
+		System.out.println(secondAccount);
+
+		// Update the balances
+		firstAccount.deposit(73.00);
+		secondAccount.withdraw(123.45);
+		System.out.println(firstAccount);
+		System.out.println(secondAccount);
+
+		// Setting the interest rates
+		BankAccount.setInterestRate(2.4);
+		firstAccount.addInterest();
+		System.out.println(firstAccount);
+
+		// Checking to see if the balances ought to be waived
+		if (firstAccount.isBalanceOver(500))
+			System.out.println("Your bank fees will be waved");
+		else
+			System.out.println("Your bank fee is $3.00");
+		if (secondAccount.isBalanceOver(500))
+			System.out.println("Your bank fees will be waved");
+		else
+			System.out.println("Your bank fee is $3.00");
+
+		// Array
+		ArrayList<BankAccount> accountList = new ArrayList<BankAccount>();
+		accountList.add(new BankAccount("Ace Ventura", 632.25));
+		accountList.add(new BankAccount("Liz Arden", 8885.78));
+		accountList.add(new BankAccount("Tim Horton", 1345.67));
+		accountList.add(new BankAccount("Clara Hughes", 895.24));
+		accountList.add(new BankAccount("Jack Bauer", 217.12));
+		accountList.add(new BankAccount("Lara Croft", 4317.39));
+		for (BankAccount nextAccount : accountList)
+			System.out.println(nextAccount);
+			System.out.println("");
+		
+		//If balance is over 1000, add 25 dollars 
+		for (BankAccount nextAccount : accountList) {
+			if (nextAccount.isBalanceOver(1000)) {
+				nextAccount.deposit(25);
+			}
+			System.out.println(nextAccount);
+		}
+		
+		//Linear Search using Index Of
+//		BankAccount target = new BankAccount("Tim Horton", 1345.67); 
+//		int index = accountList.indexOf (target); 
+//		System.out.printf("Index of %s is: %d%n", target, index);
+		Collections.sort(accountList);
+		BankAccount target = new BankAccount("Kim Weston", 1345.67); 
+		int index = Collections.binarySearch(accountList, target); 
+		//index stored is (-)insertion index-1 (actual place is 3)
+		System.out.printf("Index of %s is: %d%n", target, index);
+		//Add the account to the proper place within the sort
+		accountList.add(-index-1, target);
+		for (BankAccount nextAccount: accountList)
+		{
+			System.out.println(nextAccount);
+		}
+		Collections.sort(accountList, BankAccount.BALANCE_ORDER);
+		
+	}
+
+}
