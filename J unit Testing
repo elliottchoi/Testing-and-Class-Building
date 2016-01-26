@@ -1,0 +1,38 @@
+import static org.junit.Assert.*;
+
+import org.junit.Before;
+import org.junit.Test;
+
+//assertEquals(expected, actual, 0.001) delta is for precision 
+public class BankAccountTest {
+	BankAccount testAccount;
+
+	@Before
+	public void setUp() throws Exception {
+		testAccount = new BankAccount("Test case", 123.45);
+	}
+
+	@Test
+	public void testWithdraw() {
+		testAccount.withdraw(23.64);
+		assertEquals("Test case $99.81", testAccount.toString());
+	}
+
+	@Test
+	public void testAddInterest() {
+		BankAccount.setInterestRate(5.0);
+		testAccount.addInterest();
+		assertEquals("Test Case           $123.96", testAccount.toString());
+	}
+
+	@Test
+	public void testIsBalanceOver() {
+		// First Parameter is the expected result, the second result is the
+		// actual result
+		assertTrue(testAccount.isBalanceOver(123.43));
+		assertTrue(testAccount.isBalanceOver(123.44));
+		assertFalse(testAccount.isBalanceOver(123.45));
+		assertFalse(testAccount.isBalanceOver(123.46));
+	}
+
+}
